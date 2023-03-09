@@ -1,8 +1,7 @@
 {
   "name": "cloudresumechallenge-test",
   "version": "1.0.0",
-  "description": "Tests made for J. Law. Cordova's static web app resume. Part of the Cloud Resume Challenge (AWS Edition).",
-  "main": "index.ts",
+  "description": "Tests made for J. Law. Cordova's](https://github.com/jlawcordova) static web app resume. Part of [The Cloud Resume Challenge (AWS Edition)](https://cloudresumechallenge.dev/docs/the-challenge/aws/) and covers step 11 (Tests).",
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
