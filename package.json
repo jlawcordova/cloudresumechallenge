@@ -1,0 +1,23 @@
+{
+  "name": "cloudresumechallenge",
+  "version": "1.0.0",
+  "description": "A complete stack to build, test and deploy [J. Law. Cordova's](https://github.com/jlawcordova) static website resume. This is the output for accepting [The Cloud Resume Challenge (AWS Edition)](https://cloudresumechallenge.dev/docs/the-challenge/aws/) by [Forrest Brazeal](https://forrestbrazeal.com/).",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlawcordova/cloudresumechallenge.git"
+  },
+  "keywords": [
+    "cloudresumechallenge",
+    "AWS"
+  ],
+  "author": "J. Law. Cordova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlawcordova/cloudresumechallenge/issues"
+  },
+  "homepage": "https://github.com/jlawcordova/cloudresumechallenge#readme",
+  "workspaces": [
+    "cloudresumechallenge-web"
+  ]
+}
