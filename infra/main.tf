@@ -43,3 +43,15 @@ resource "aws_dynamodb_table" "visitor-table" {
     Environment = "cloudresumechallenge"
   }
 }
+
+data "archive_file" "lambda_hello_world" {
+  type = "zip"
+
+  output_path = "${path.module}/../app.zip"
+  excludes    = [
+    "${path.module}/../app/README.md",
+    "${path.module}/../app/.gitignore"
+  ]
+
+  source_dir  = "${path.module}/../app"
+}
