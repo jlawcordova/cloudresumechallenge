@@ -44,7 +44,11 @@ resource "aws_dynamodb_table" "visitor-table" {
   }
 }
 
-data "archive_file" "lambda_hello_world" {
+resource "aws_s3_bucket" "app-bucket" {
+  bucket = "jlawcordova-cloudresumechallenge-development-app"
+}
+
+data "archive_file" "add-view-count-lambda" {
   type = "zip"
 
   output_path = "${path.module}/../app.zip"
@@ -54,4 +58,13 @@ data "archive_file" "lambda_hello_world" {
   ]
 
   source_dir  = "${path.module}/../app"
+}
+
+resource "aws_s3_object" "add-view-count-lambda" {
+  bucket = aws_s3_bucket.app-bucket.id
+
+  key    = "app.zip"
+  source = data.archive_file.add-view-count-lambda.output_path
+
+  etag = filemd5(data.archive_file.add-view-count-lambda.output_path)
 }
