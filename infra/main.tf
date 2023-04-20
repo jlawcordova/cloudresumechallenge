@@ -151,3 +151,64 @@ resource "aws_cloudwatch_log_group" "add-view-count-log-group" {
 
   retention_in_days = 30
 }
+
+resource "aws_apigatewayv2_api" "cloud-resume-challenge-api" {
+  name          = "cloud-resume-challenge"
+  protocol_type = "HTTP"
+}
+
+resource "aws_apigatewayv2_stage" "default-stage" {
+  api_id = aws_apigatewayv2_api.cloud-resume-challenge-api.id
+  name   = "$default"
+  auto_deploy = true
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.cloud-resume-challenge-log-group.arn
+
+    format = jsonencode({
+      requestId               = "$context.requestId"
+      sourceIp                = "$context.identity.sourceIp"
+      requestTime             = "$context.requestTime"
+      protocol                = "$context.protocol"
+      httpMethod              = "$context.httpMethod"
+      resourcePath            = "$context.resourcePath"
+      routeKey                = "$context.routeKey"
+      status                  = "$context.status"
+      responseLength          = "$context.responseLength"
+      integrationErrorMessage = "$context.integrationErrorMessage"
+      }
+    )
+  }
+}
+
+resource "aws_apigatewayv2_integration" "add-view-count-integration" {
+  api_id = aws_apigatewayv2_api.cloud-resume-challenge-api.id
+
+  integration_uri    = aws_lambda_function.add-view-count-function.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_route" "add-view-count-route" {
+  api_id = aws_apigatewayv2_api.cloud-resume-challenge-api.id
+
+  route_key = "PATCH /view-count"
+  target    = "integrations/${aws_apigatewayv2_integration.add-view-count-integration.id}"
+}
+
+resource "aws_cloudwatch_log_group" "cloud-resume-challenge-log-group" {
+  name = "/aws/api_gw/${aws_apigatewayv2_api.cloud-resume-challenge-api.name}"
+
+  retention_in_days = 30
+}
+
+resource "aws_lambda_permission" "cloud-resume-challenge-lambda-permission" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.add-view-count-function.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.cloud-resume-challenge-api.execution_arn}/*/*/view-count"
+}
