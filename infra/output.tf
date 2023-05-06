@@ -9,3 +9,7 @@ output "cloud_resume_challenge_base_url" {
 
   value = aws_apigatewayv2_stage.default-stage.invoke_url
 }
+
+output "website_endpoint" {
+  value = aws_s3_bucket_website_configuration.web_website_configuration.website_endpoint
+}
