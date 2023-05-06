@@ -161,6 +161,10 @@ resource "aws_cloudwatch_log_group" "add-view-count-log-group" {
 resource "aws_apigatewayv2_api" "cloud-resume-challenge-api" {
   name          = "cloud-resume-challenge"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_methods = ["PATCH"]
+    allow_origins = ["*"]
+  }
 }
 
 resource "aws_apigatewayv2_stage" "default-stage" {
