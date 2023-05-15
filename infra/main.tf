@@ -359,17 +359,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   price_class = "PriceClass_100"
 
   default_cache_behavior {
+    # Using the CachingOptimized managed policy ID
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
     target_origin_id = aws_s3_bucket_website_configuration.web_website_configuration.website_endpoint
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
 
     viewer_protocol_policy = "redirect-to-https"
   }
