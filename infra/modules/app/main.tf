@@ -53,7 +53,7 @@ resource "aws_s3_object" "app" {
 data "archive_file" "app" {
   type = "zip"
 
-  output_path = "${path.module}/../../../app.zip"
+  output_path = "${path.module}/app.zip"
   source_dir  = "${path.module}/../../../app"
   excludes = [
     "${path.module}/../../../app/README.md",
