@@ -30,12 +30,6 @@ module "app" {
   environment = var.environment
 }
 
-# resource "aws_cloudwatch_log_group" "add-view-count-log-group" {
-#   name = "/aws/lambda/${aws_lambda_function.add-view-count-function.function_name}"
-
-#   retention_in_days = 30
-# }
-
 # module "web_build_files" {
 #   source = "hashicorp/dir/template"
 
