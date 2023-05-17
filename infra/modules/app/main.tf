@@ -75,6 +75,10 @@ resource "aws_lambda_function" "app" {
 
   role = aws_iam_role.app.arn
 
+  depends_on = [
+    aws_cloudwatch_log_group.app_lambda,
+  ]
+
   environment {
     variables = {
       VIEW_COUNT_TABLE = aws_dynamodb_table.view_count.name,
@@ -111,6 +115,12 @@ resource "aws_iam_role_policy" "app_dynamodb" {
       visitor    = aws_dynamodb_table.visitor.arn
     }
   )
+}
+
+resource "aws_cloudwatch_log_group" "app_lambda" {
+  name = "/aws/lambda/${var.project}-app"
+
+  retention_in_days = 30
 }
 
 # Setup the HTTP API Gateway, its stages and routes.
