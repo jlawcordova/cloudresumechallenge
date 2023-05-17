@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "GetItemViewCount",
+      "Effect": "Allow",
+      "Action": "dynamodb:GetItem",
+      "Resource": "${view_count}"
+    },
+    {
+      "Sid": "UpdateItemViewCount",
+      "Effect": "Allow",
+      "Action": "dynamodb:UpdateItem",
+      "Resource": "${view_count}"
+    },
+    {
+      "Sid": "GetItemVisitor",
+      "Effect": "Allow",
+      "Action": "dynamodb:GetItem",
+      "Resource": "${visitor}"
+    },
+    {
+      "Sid": "PutItemVisitor",
+      "Effect": "Allow",
+      "Action": "dynamodb:PutItem",
+      "Resource": "${visitor}"
+    }
+  ]
+}

@@ -9,9 +9,12 @@ import { hash } from "./hashUtil.mjs";
 const Region = "ap-southeast-1";
 export const dynamoDBClient = new DynamoDBClient({ region: Region });
 
+const viewCountTable = process.env.VIEW_COUNT_TABLE;
+const visitorTable = process.env.VISITOR_TABLE;
+
 export async function hasVisitorViewed(ip) {
   const params = {
-    TableName: "Visitor",
+    TableName: visitorTable,
     Key: {
       IP: { S: hash(ip) },
     },
@@ -22,7 +25,7 @@ export async function hasVisitorViewed(ip) {
 
 export async function putVisitor(ip) {
   const params = {
-    TableName: "Visitor",
+    TableName: visitorTable,
     Item: {
       IP: { S: hash(ip) },
       ViewedOn: { S: new Date().toISOString() },
@@ -33,7 +36,7 @@ export async function putVisitor(ip) {
 
 export async function getViewCount(resumeId) {
   const params = {
-    TableName: "ViewCount",
+    TableName: viewCountTable,
     Key: {
       Id: { S: resumeId },
     },
@@ -44,7 +47,7 @@ export async function getViewCount(resumeId) {
 
 export async function incrementViewCount(resumeId) {
   const params = {
-    TableName: "ViewCount",
+    TableName: viewCountTable,
     Key: {
       Id: { S: resumeId },
     },
