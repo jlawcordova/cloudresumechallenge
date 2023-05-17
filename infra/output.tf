@@ -1,3 +1,9 @@
+output "app_url" {
+  description = "The URL for Cloud Resume Challenge API Gateway."
+
+  value = module.app.url
+}
+
 # output "add_view_count_function_name" {
 #   description = "Name of the addViewCount Lambda function."
 

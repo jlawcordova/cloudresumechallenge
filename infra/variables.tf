@@ -1,5 +1,6 @@
 variable "project" {
   type = string
+  default = ""
   description = "The name of the project. This is used for resource naming and tagging."
 }
 

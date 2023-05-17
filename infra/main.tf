@@ -23,8 +23,11 @@ resource "random_pet" "project" {
 module "app" {
   source = "./modules/app"
 
-  environment = "development"
-  project = "cloud-resume-challenge-${random_pet.project.id}"
+  # Use a random name when the project variable is not set.
+  project = coalesce(var.project, "cloud-resume-challenge-${random_pet.project.id}")
+
+  alarm_email = var.alarm_email
+  environment = var.environment
 }
 
 # resource "aws_cloudwatch_log_group" "add-view-count-log-group" {
