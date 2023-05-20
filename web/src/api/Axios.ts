@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AxiosClient = axios.create({
-  baseURL: "https://api-resume.jlawcordova.com/",
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
