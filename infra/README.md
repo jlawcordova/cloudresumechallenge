@@ -27,7 +27,7 @@ project = "cloud-resume-challenge-immune-sunbird"
 
 ## Deploy the Web
 
-Use the `app_url` as the base API URL when [building the web](../README.md#getting-started) from the project root.
+The web application needs to be built before deploying the web terraform configuration. Use the `app_url` as the base API URL when [building the web](../README.md#getting-started) from the project root.
 
 ```
 # From the infra/app directory
