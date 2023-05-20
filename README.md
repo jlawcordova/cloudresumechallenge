@@ -14,6 +14,12 @@ Install all dependencies by running:
 
 `npm install`
 
+Create a `.env` file to setup the environment variables. In the `.env` file:
+
+```
+REACT_APP_API_BASE_URL=https://api-resume.jlawcordova.com/
+```
+
 Run commands for a workspace. For example, to run the React app:
 
 `npm run start --workspace=web`
