@@ -26,7 +26,5 @@ module "web" {
   # Use a random name when the project variable is not set.
   project = coalesce(var.project, "cloud-resume-challenge-${random_pet.project.id}")
 
-  app_url = var.app_url
-
   environment = var.environment
 }
