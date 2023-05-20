@@ -53,7 +53,7 @@ resource "aws_s3_object" "app" {
 data "archive_file" "app" {
   type = "zip"
 
-  output_path = "${path.module}/../../../app.zip"
+  output_path = "${path.module}/app.zip"
   source_dir  = "${path.module}/../../../app"
   excludes = [
     "${path.module}/../../../app/README.md",
@@ -74,6 +74,10 @@ resource "aws_lambda_function" "app" {
   source_code_hash = data.archive_file.app.output_base64sha256
 
   role = aws_iam_role.app.arn
+
+  depends_on = [
+    aws_cloudwatch_log_group.app_lambda,
+  ]
 
   environment {
     variables = {
@@ -111,6 +115,12 @@ resource "aws_iam_role_policy" "app_dynamodb" {
       visitor    = aws_dynamodb_table.visitor.arn
     }
   )
+}
+
+resource "aws_cloudwatch_log_group" "app_lambda" {
+  name = "/aws/lambda/${var.project}-app"
+
+  retention_in_days = 30
 }
 
 # Setup the HTTP API Gateway, its stages and routes.
