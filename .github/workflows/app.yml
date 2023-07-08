@@ -4,6 +4,7 @@ on: [push]
 jobs:
   Build-Cloud-Resume-Challenge-App:
     runs-on: ubuntu-latest
+    environment: development
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v2
