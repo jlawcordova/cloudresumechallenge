@@ -22,6 +22,6 @@ After a moment, the Cypress Launchpad will open.
 
 In the project root, run:
 
-`npm run cy:run`
+`npm run cypress:run`
 
 This runs Cypress tests to completion.
