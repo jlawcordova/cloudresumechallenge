@@ -10,10 +10,8 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
-    - run: echo $AWS_ACCESS_KEY_ID
-    - run: echo $AWS_SECRET_ACCESS_KEY
     - name: Initialize terraform
-      run: terraform init
+      run: terraform init -backend-config="access_key=$AWS_ACCESS_KEY_ID" -backend-config="secret_key=$AWS_SECRET_ACCESS_KEY"
       working-directory: ./infra/app
     - name: Plan terraform
       run: terraform plan
