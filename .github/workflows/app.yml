@@ -5,9 +5,10 @@ jobs:
   Build-Cloud-Resume-Challenge-App:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
     - name: Initialize terraform
       run: terraform init
-      working-directory: infra/app
+      working-directory: ./infra/app
