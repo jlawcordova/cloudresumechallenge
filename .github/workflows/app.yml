@@ -8,14 +8,16 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      PR_NUMBER: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
+    - run: echo $PR_NUMBER
     - name: Initialize terraform
-      run: terraform init
+      run: terraform init -backend-config="key=github-actions/pr/$PR_NUMBER"
       working-directory: ./infra/app
     - name: Apply terraform
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -backend-config="key=github-actions/pr/$PR_NUMBER"
       working-directory: ./infra/app
