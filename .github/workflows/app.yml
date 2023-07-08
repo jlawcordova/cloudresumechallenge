@@ -1,6 +1,6 @@
 name: Build Cloud Resume Challenge App
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: [pull_request]
 jobs:
   Build-Cloud-Resume-Challenge-App:
     runs-on: ubuntu-latest
