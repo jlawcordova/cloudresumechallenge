@@ -18,5 +18,5 @@ jobs:
       run: terraform init -backend-config="key=$GITHUB_REF"
       working-directory: ./infra/app
     - name: Apply terraform
-      run: terraform apply -auto-approve -backend-config="key=$GITHUB_REF"
+      run: terraform apply -auto-approve
       working-directory: ./infra/app
