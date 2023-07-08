@@ -44,7 +44,7 @@ Use the Terraform configuration in the [`web` directory](./web/) to deploy the a
 # From the project root directory
 cd infra/web
 terraform init
-terraform apply -var="cloud-resume-challenge-immune-sunbird"
+terraform apply -var="project=cloud-resume-challenge-immune-sunbird"
 ```
 
 > Provide the project name as an input so that the web resources will be named and tagged similarly to the app resources.
