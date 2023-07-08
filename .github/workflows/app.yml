@@ -12,3 +12,6 @@ jobs:
     - name: Initialize terraform
       run: terraform init
       working-directory: ./infra/app
+    - name: Plan terraform
+      run: terraform plan
+      working-directory: ./infra/app
