@@ -14,7 +14,7 @@ Install all dependencies by running:
 
 `npm install`
 
-Create a `.env` file to setup the environment variables. In the `.env` file:
+Create a `.env` file in the `web` directory to setup the environment variables. In the `.env` file:
 
 ```
 REACT_APP_API_BASE_URL=https://api-resume.jlawcordova.com/
