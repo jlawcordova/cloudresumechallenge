@@ -10,4 +10,4 @@ jobs:
         terraform_version: 1.4.4
     - name: Initialize terraform
       run: terraform init
-      working-directory: ./infra/app
+      working-directory: infra/app
