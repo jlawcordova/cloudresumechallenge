@@ -24,8 +24,6 @@ jobs:
         name: Apply app terraform
         run: terraform apply -auto-approve
         working-directory: ./infra/app
-      # - run: echo ${{ steps.apply_app.outputs.project }}
-      # - run: echo ${{ steps.apply_app.outputs.app_url }}
       - name: Set app terraform outputs
         run: |
           echo "PROJECT=$(terraform output -raw project)" >> "$GITHUB_ENV" && 
@@ -33,7 +31,6 @@ jobs:
         working-directory: ./infra/app
       - name: Install web dependencies
         run: npm install
-      - run: echo ${{ env.REACT_APP_API_BASE_URL }}
       - name: Build web
         run: |
           export REACT_APP_API_BASE_URL=${{ env.REACT_APP_API_BASE_URL }} && 
@@ -41,7 +38,6 @@ jobs:
       - name: Initialize web terraform
         run: terraform init -backend-config="key=${{github.event.number}}-web"
         working-directory: ./infra/web
-      - run: echo ${{ env.PROJECT }}
       - name: Apply web terraform
         run: terraform apply -var="project=${{ env.PROJECT }}" -auto-approve
         working-directory: ./infra/web
