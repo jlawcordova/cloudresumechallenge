@@ -1,3 +1,4 @@
+
 name: Build Cloud Resume Challenge App
 run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
 on: [pull_request]
@@ -13,7 +14,6 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
-    - run: echo $GITHUB_REF
     - name: Initialize terraform
       run: terraform init -backend-config="key=$GITHUB_REF"
       working-directory: ./infra/app
