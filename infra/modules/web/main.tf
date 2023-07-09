@@ -38,7 +38,7 @@ resource "aws_s3_bucket_policy" "web" {
 
   policy = templatefile("${path.module}/templates/s3-public-policy.json", { bucket = aws_s3_bucket.web.id })
 
-  depends_on = ["aws_s3_bucket_public_access_block.web"]
+  depends_on = [aws_s3_bucket_public_access_block.web]
 }
 
 resource "aws_s3_object" "web" {
