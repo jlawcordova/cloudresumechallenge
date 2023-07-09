@@ -22,6 +22,8 @@ jobs:
       - name: Apply app terraform
         run: terraform apply -auto-approve
         working-directory: ./infra/app
+      - run: echo "PROJECT=$(terraform output -raw project)"
+        working-directory: ./infra/app
       - name: Set app terraform outputs
         run: |
           echo "PROJECT=$(terraform output -raw project)" >> "$GITHUB_ENV" && 
