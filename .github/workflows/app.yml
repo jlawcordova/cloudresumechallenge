@@ -1,5 +1,5 @@
 
-name: Build Cloud Resume Challenge App
+name: Deploy Cloud Resume Challenge App
 run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
 on: [pull_request]
 jobs:
@@ -14,10 +14,26 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
-    - run: echo ${{github.event.number}}
-    - name: Initialize terraform
-      run: terraform init -backend-config="key=${{github.event.number}}"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18.13.0
+    - name: Initialize app terraform
+      run: terraform init -backend-config="key=${{github.event.number}}-app"
       working-directory: ./infra/app
-    - name: Apply terraform
+    - name: Apply app terraform
       run: terraform apply -auto-approve
       working-directory: ./infra/app
+    - name: Set app terraform outputs
+      run: export PROJECT=$(terraform output project) && export REACT_APP_API_BASE_URL=$(terraform output app_url)
+      working-directory: ./infra/app
+    - name: Install web dependencies
+      run: npm install
+    - run: echo $REACT_APP_API_BASE_URL
+    - name: Build web
+      run: npm run build --workspace=web
+    - name: Initialize web terraform
+      run: terraform init -backend-config="key=${{github.event.number}}-web"
+      working-directory: ./infra/web
+    - name: Apply web terraform
+      run: terraform apply -var="project=$PROJECT" -auto-approve
+      working-directory: ./infra/web
