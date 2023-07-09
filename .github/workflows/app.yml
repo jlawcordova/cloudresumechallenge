@@ -24,8 +24,8 @@ jobs:
         working-directory: ./infra/app
       - name: Set app terraform outputs
         run: |
-          echo "PROJECT=$(terraform output project)" >> "$GITHUB_ENV" && 
-          echo "REACT_APP_API_BASE_URL=$(terraform output app_url)" >> "$GITHUB_ENV"
+          echo "PROJECT=$(terraform output -raw project)" >> "$GITHUB_ENV" && 
+          echo "REACT_APP_API_BASE_URL=$(terraform output -raw app_url)" >> "$GITHUB_ENV"
         working-directory: ./infra/app
       - name: Install web dependencies
         run: npm install
