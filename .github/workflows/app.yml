@@ -74,6 +74,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: web-build
+          path: web/build
       - name: Initialize web terraform
         run: terraform init -backend-config="key=${{github.event.number}}-web"
         working-directory: ./infra/web
