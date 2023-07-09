@@ -16,8 +16,9 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
+    - run: echo ${{github.event.number}}
     - name: Initialize terraform
-      run: terraform init -backend-config="key=$GITHUB_REF"
+      run: terraform init -backend-config="key=${{github.event.number}}"
       working-directory: ./infra/app
     - name: Destroy terraform
       run: terraform destroy -auto-approve
