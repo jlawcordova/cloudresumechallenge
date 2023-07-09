@@ -37,6 +37,8 @@ resource "aws_s3_bucket_policy" "web" {
   bucket = aws_s3_bucket.web.id
 
   policy = templatefile("${path.module}/templates/s3-public-policy.json", { bucket = aws_s3_bucket.web.id })
+
+  depends_on = [aws_s3_bucket_public_access_block.web]
 }
 
 resource "aws_s3_object" "web" {
@@ -99,4 +101,6 @@ resource "aws_cloudfront_distribution" "web" {
     Project     = var.project
     Environment = var.environment
   }
+
+  wait_for_deployment = false
 }

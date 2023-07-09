@@ -1,5 +1,5 @@
 
-name: Build Cloud Resume Challenge App
+name: Destroy Cloud Resume Challenge App
 run-name: ${{ github.actor }} is destroying a development Cloud Resume Challenge.
 on:
   pull_request:
@@ -16,10 +16,15 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.4
-    - run: echo ${{github.event.number}}
-    - name: Initialize terraform
-      run: terraform init -backend-config="key=${{github.event.number}}"
+    - name: Initialize app terraform
+      run: terraform init -backend-config="key=${{github.event.number}}-app"
       working-directory: ./infra/app
-    - name: Destroy terraform
+    - name: Destroy app terraform
       run: terraform destroy -auto-approve
       working-directory: ./infra/app
+    - name: Initialize web terraform
+      run: terraform init -backend-config="key=${{github.event.number}}-web"
+      working-directory: ./infra/web
+    - name: Destroy web terraform
+      run: terraform destroy -auto-approve
+      working-directory: ./infra/web
