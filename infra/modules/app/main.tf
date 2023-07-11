@@ -186,7 +186,7 @@ resource "aws_apigatewayv2_integration" "app" {
 }
 
 resource "aws_apigatewayv2_api_mapping" "app" {
-  count = var.domain == null ? 0 : 1
+  count = var.domain == null || var.domain == "" ? 0 : 1
 
   api_id      = aws_apigatewayv2_api.app.id
   domain_name = aws_apigatewayv2_domain_name.app[0].id
@@ -194,7 +194,7 @@ resource "aws_apigatewayv2_api_mapping" "app" {
 }
 
 resource "aws_apigatewayv2_domain_name" "app" {
-  count = var.domain == null ? 0 : 1
+  count = var.domain == null || var.domain == "" ? 0 : 1
 
   domain_name = var.domain
 
@@ -206,7 +206,7 @@ resource "aws_apigatewayv2_domain_name" "app" {
 }
 
 resource "aws_acm_certificate" "app" {
-  count = var.domain == null ? 0 : 1
+  count = var.domain == null || var.domain == "" ? 0 : 1
 
   domain_name       = var.domain
   validation_method = "DNS"
