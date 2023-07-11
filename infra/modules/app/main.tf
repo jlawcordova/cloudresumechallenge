@@ -301,7 +301,7 @@ resource "aws_sns_topic" "app" {
 }
 
 resource "aws_sns_topic_subscription" "app" {
-  count = var.alarm_email == null ? 0 : 1
+  count = var.alarm_email == null || var.alarm_email == "" ? 0 : 1
 
   topic_arn = aws_sns_topic.app.arn
   protocol  = "email"
