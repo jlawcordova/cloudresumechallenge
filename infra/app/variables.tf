@@ -4,6 +4,13 @@ variable "project" {
   description = "The name of the project. This is used for resource naming and tagging."
 }
 
+variable "domain" {
+  type        = string
+  default     = null
+  description = "The domain for the app."
+  nullable    = true
+}
+
 variable "alarm_email" {
   type        = string
   default     = null

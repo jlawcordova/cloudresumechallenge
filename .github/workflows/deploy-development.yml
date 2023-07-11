@@ -1,4 +1,4 @@
-name: Deploy Cloud Resume Challenge App
+name: Deploy Cloud Resume Challenge
 run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
 on: [pull_request]
 jobs:
@@ -18,7 +18,10 @@ jobs:
         with:
           node-version: 18.13.0
       - name: Initialize app terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-app"
+        run: |
+          terraform init \
+            -backend-config="key=${{github.event.number}}-app" \
+            -backend-config="bucket=jlawcordova-cloud-resume-challenge-tf-backend-development"
         working-directory: ./infra/app
       - name: Apply app terraform
         run: terraform apply -auto-approve
@@ -76,7 +79,10 @@ jobs:
           name: web-build
           path: web/build
       - name: Initialize web terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-web"
+        run: |
+          terraform init \
+            -backend-config="key=${{github.event.number}}-web" \
+            -backend-config="bucket=jlawcordova-cloud-resume-challenge-tf-backend-development"
         working-directory: ./infra/web
       - name: Apply web terraform
         run: terraform apply -var="project=$PROJECT" -auto-approve

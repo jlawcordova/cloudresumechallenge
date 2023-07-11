@@ -185,6 +185,42 @@ resource "aws_apigatewayv2_integration" "app" {
   payload_format_version = "2.0"
 }
 
+resource "aws_apigatewayv2_api_mapping" "app" {
+  count = var.domain == null ? 0 : 1
+
+  api_id      = aws_apigatewayv2_api.app.id
+  domain_name = aws_apigatewayv2_domain_name.app[0].id
+  stage       = aws_apigatewayv2_stage.default.id
+}
+
+resource "aws_apigatewayv2_domain_name" "app" {
+  count = var.domain == null ? 0 : 1
+
+  domain_name = var.domain
+
+  domain_name_configuration {
+    certificate_arn = aws_acm_certificate.app[0].arn
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
+}
+
+resource "aws_acm_certificate" "app" {
+  count = var.domain == null ? 0 : 1
+
+  domain_name       = var.domain
+  validation_method = "DNS"
+
+  tags = {
+    Project     = var.project
+    Environment = var.environment
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_lambda_permission" "app" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
