@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
 on: [pull_request]
 jobs:
   call-workflow-passing-data:
-    uses: ././.github/workflows/deploy-cloud-resume-challenge.yml
+    uses: ./.github/workflows/deploy-cloud-resume-challenge.yml
     with:
       BACKEND_KEY: ${{ github.event.number }}
       BACKEND_BUCKET: jlawcordova-cloud-resume-challenge-tf-backend-development
