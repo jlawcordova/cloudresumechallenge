@@ -1,5 +1,5 @@
-name: Deploy Cloud Resume Challenge
-run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
+name: Deploy Cloud Resume Challenge Development
+run-name: ${{ github.actor }} is deploying Cloud Resume Challenge in development.
 on: [pull_request]
 jobs:
   deploy:

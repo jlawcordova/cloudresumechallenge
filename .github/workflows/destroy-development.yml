@@ -1,5 +1,5 @@
 name: Destroy Cloud Resume Challenge
-run-name: ${{ github.actor }} is destroying a development Cloud Resume Challenge.
+run-name: ${{ github.actor }} is destroying Cloud Resume Challenge in development.
 on:
   pull_request:
     types: [closed]
