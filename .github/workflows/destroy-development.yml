@@ -1,5 +1,5 @@
-name: Destroy Cloud Resume Challenge App
-run-name: ${{ github.actor }} is destroying a development Cloud Resume Challenge.
+name: Destroy Cloud Resume Challenge
+run-name: ${{ github.actor }} is destroying Cloud Resume Challenge in development.
 on:
   pull_request:
     types: [closed]
@@ -16,7 +16,10 @@ jobs:
         with:
           terraform_version: 1.4.4
       - name: Initialize app terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-app"
+        run: |
+          terraform init \
+            -backend-config="key=${{github.event.number}}-app" \
+            -backend-config="bucket=jlawcordova-cloud-resume-challenge-tf-backend-development"
         working-directory: ./infra/app
       - name: Destroy app terraform
         run: terraform destroy -auto-approve
@@ -34,7 +37,10 @@ jobs:
         with:
           terraform_version: 1.4.4
       - name: Initialize web terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-web"
+        run: |
+          terraform init \
+            -backend-config="key=${{github.event.number}}-web" \
+            -backend-config="bucket=jlawcordova-cloud-resume-challenge-tf-backend-development"
         working-directory: ./infra/web
       - name: Destroy web terraform
         run: terraform destroy -auto-approve

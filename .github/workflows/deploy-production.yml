@@ -1,0 +1,17 @@
+name: Deploy Cloud Resume Challenge Production
+run-name: ${{ github.actor }} is deploying Cloud Resume Challenge in production.
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-cloud-resume-challenge.yml
+    with:
+      backend-key: main
+      backend-bucket: jlawcordova-cloud-resume-challenge-tf-backend
+      project: ${{ env.TF_VAR_PROJECT }}
+      api-domain: ${{ env.TF_VAR_DOMAIN }}
+      alarm-email: ${{ env.TF_VAR_ALARM_EMAIL }}
+      target-environment: production
+    secrets: inherit

@@ -1,83 +1,11 @@
-name: Deploy Cloud Resume Challenge App
-run-name: ${{ github.actor }} is deploying a development Cloud Resume Challenge.
+name: Deploy Cloud Resume Challenge Development
+run-name: ${{ github.actor }} is deploying Cloud Resume Challenge in development.
 on: [pull_request]
 jobs:
-  deploy-app:
-    runs-on: ubuntu-latest
-    environment: development
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.4.4
-          terraform_wrapper: false
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.13.0
-      - name: Initialize app terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-app"
-        working-directory: ./infra/app
-      - name: Apply app terraform
-        run: terraform apply -auto-approve
-        working-directory: ./infra/app
-      - id: app-output
-        name: Set app terraform outputs
-        run: |
-          echo "project=$(terraform output -raw project)" >> "$GITHUB_OUTPUT" && 
-          echo "app-url=$(terraform output -raw app_url)" >> "$GITHUB_OUTPUT"
-        working-directory: ./infra/app
-    outputs:
-      project: ${{ steps.app-output.outputs.project }}
-      app-url: ${{ steps.app-output.outputs.app-url }}
-
-  build-web:
-    needs: deploy-app
-    runs-on: ubuntu-latest
-    environment: development
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      REACT_APP_API_BASE_URL: ${{needs.deploy-app.outputs.app-url}}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.13.0
-      - name: Install web dependencies
-        run: npm install
-      - name: Build web
-        run: npm run build --workspace=web
-      - name: Archive web artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: web-build
-          path: web/build
-
-  deploy-web:
-    needs: [deploy-app, build-web]
-    runs-on: ubuntu-latest
-    environment: development
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      PROJECT: ${{needs.deploy-app.outputs.project}}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.4.4
-          terraform_wrapper: false
-      - name: Download web artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: web-build
-          path: web/build
-      - name: Initialize web terraform
-        run: terraform init -backend-config="key=${{github.event.number}}-web"
-        working-directory: ./infra/web
-      - name: Apply web terraform
-        run: terraform apply -var="project=$PROJECT" -auto-approve
-        working-directory: ./infra/web
+  deploy:
+    uses: ./.github/workflows/deploy-cloud-resume-challenge.yml
+    with:
+      backend-key: ${{ github.event.number }}
+      backend-bucket: jlawcordova-cloud-resume-challenge-tf-backend-development
+      target-environment: development
+    secrets: inherit
