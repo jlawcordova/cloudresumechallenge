@@ -1,3 +1,8 @@
+provider "aws" {
+  alias  = "us-east-1"
+  region = "us-east-1"
+}
+
 # Prepare the build for S3 upload.
 # This is need to specify the content-type for each object.
 # See https://stackoverflow.com/a/46921393/6811810
@@ -75,6 +80,7 @@ resource "aws_cloudfront_distribution" "web" {
 
   enabled     = true
   price_class = "PriceClass_100"
+  aliases = var.domain == null || var.domain == "" ? null : [var.domain]
 
   default_cache_behavior {
     # Using the CachingOptimized managed policy ID
@@ -94,7 +100,13 @@ resource "aws_cloudfront_distribution" "web" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    # Set to true if not using a custom domain
+    cloudfront_default_certificate = var.domain == null || var.domain == "" ? true : false
+    
+    # Set a certificate if using a custom domain
+    acm_certificate_arn            = var.domain == null || var.domain == "" ? null : aws_acm_certificate.web[0].arn
+    minimum_protocol_version       = var.domain == null || var.domain == "" ? null : "TLSv1.2_2021"
+    ssl_support_method             = var.domain == null || var.domain == "" ? null : "sni-only"
   }
 
   tags = {
@@ -103,4 +115,22 @@ resource "aws_cloudfront_distribution" "web" {
   }
 
   wait_for_deployment = false
+}
+
+resource "aws_acm_certificate" "web" {
+  count = var.domain == null || var.domain == "" ? 0 : 1
+
+  provider = aws.us-east-1
+
+  domain_name       = var.domain
+  validation_method = "DNS"
+
+  tags = {
+    Project     = var.project
+    Environment = var.environment
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
