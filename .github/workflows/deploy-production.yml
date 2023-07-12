@@ -10,8 +10,5 @@ jobs:
     with:
       backend-key: main
       backend-bucket: jlawcordova-cloud-resume-challenge-tf-backend
-      project: ${{ env.TF_VAR_PROJECT }}
-      api-domain: ${{ env.TF_VAR_DOMAIN }}
-      alarm-email: ${{ env.TF_VAR_ALARM_EMAIL }}
       target-environment: production
     secrets: inherit
