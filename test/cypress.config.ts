@@ -7,4 +7,7 @@ export default defineConfig({
     },
     baseUrl: "https://resume.jlawcordova.com",
   },
+  env: {
+    apiUrl: "https://api-resume.jlawcordova.com",
+  },
 });
