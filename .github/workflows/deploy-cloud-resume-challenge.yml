@@ -71,6 +71,8 @@ jobs:
           node-version: 18.13.0
       - name: Install web dependencies
         run: npm install
+      - name: Lint web
+        run: npm run lint --workspace=web
       - name: Build web
         run: npm run build --workspace=web
       - name: Archive web artifact
