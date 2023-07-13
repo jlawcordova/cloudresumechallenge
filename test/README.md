@@ -20,6 +20,8 @@ After a moment, the Cypress Launchpad will open.
 
 ## Running from the CLI
 
+By default the production environment at [https://resume.jlawcordova.com](https://resume.jlawcordova.com) is tested. If needed, this can be changed by modifying `e2e.baseUrl` and `env.apiUrl` in [`cypress.config.ts`](./cypress.config.ts).
+
 In the project root, run:
 
 `npm run cypress:run`
