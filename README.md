@@ -24,4 +24,4 @@ Run commands for a workspace. For example, to run the React app:
 
 `npm run start --workspace=web`
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![Deployment status](https://github.com/jlawcordova/cloudresumechallenge/actions/workflows/deploy-production.yml/badge.svg)
