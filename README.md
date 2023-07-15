@@ -25,3 +25,9 @@ REACT_APP_API_BASE_URL=https://api-resume.jlawcordova.com/
 Run commands for a workspace. For example, to run the React app:
 
 `npm run start --workspace=web`
+
+# Running Tests
+
+Run Cypress tests locally with:
+
+`npm run cypress:run --workspace=test`
