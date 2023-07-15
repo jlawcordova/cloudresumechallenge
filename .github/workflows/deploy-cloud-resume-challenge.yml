@@ -29,7 +29,7 @@ jobs:
       TF_VAR_alarm_email: ${{ vars.TF_VAR_ALARM_EMAIL }}
       TF_VAR_environment: ${{ inputs.target-environment }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.4
@@ -65,7 +65,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       REACT_APP_API_BASE_URL: ${{needs.deploy-app.outputs.app-url}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18.13.0
@@ -91,7 +91,7 @@ jobs:
       TF_VAR_project: ${{needs.deploy-app.outputs.project}}
       TF_VAR_domain: ${{ vars.TF_VAR_WEB_DOMAIN }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.4
