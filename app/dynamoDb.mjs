@@ -25,7 +25,8 @@ export async function hasVisitorViewed(ip) {
 
 export async function putVisitor(ip) {
   var today = new Date();
-  var tomorrow = new Date().setDate(today + 1);
+  var tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
 
   const params = {
     TableName: visitorTable,
