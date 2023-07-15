@@ -9,6 +9,11 @@ resource "aws_dynamodb_table" "view_count" {
     type = "S"
   }
 
+  ttl {
+    attribute_name = "TTL"
+    enabled        = true
+  }
+
   tags = {
     Project     = var.project
     Environment = var.environment
@@ -251,7 +256,7 @@ resource "aws_cloudwatch_metric_alarm" "app_api_latency" {
 
   dimensions = {
     ApiName = aws_apigatewayv2_api.app.name
-    Stage = aws_apigatewayv2_stage.default.name
+    Stage   = aws_apigatewayv2_stage.default.name
   }
 
   alarm_actions = [aws_sns_topic.app.arn]
@@ -271,7 +276,7 @@ resource "aws_cloudwatch_metric_alarm" "app_api_count" {
 
   dimensions = {
     ApiName = aws_apigatewayv2_api.app.name
-    Stage = aws_apigatewayv2_stage.default.name
+    Stage   = aws_apigatewayv2_stage.default.name
   }
 
   alarm_actions = [aws_sns_topic.app.arn]
