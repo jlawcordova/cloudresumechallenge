@@ -32,7 +32,7 @@ export async function putVisitor(ip) {
     TableName: visitorTable,
     Item: {
       IP: { S: hash(ip) },
-      TTL: { N: `${tomorrow.getTime()}` },
+      TTL: { N: `${tomorrow.getTime() / 1000}` },
     },
   };
   await dynamoDBClient.send(new PutItemCommand(params));
