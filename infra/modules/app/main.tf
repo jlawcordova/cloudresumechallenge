@@ -9,11 +9,6 @@ resource "aws_dynamodb_table" "view_count" {
     type = "S"
   }
 
-  ttl {
-    attribute_name = "TTL"
-    enabled        = true
-  }
-
   tags = {
     Project     = var.project
     Environment = var.environment
@@ -28,6 +23,11 @@ resource "aws_dynamodb_table" "visitor" {
   attribute {
     name = "IP"
     type = "S"
+  }
+
+  ttl {
+    attribute_name = "TTL"
+    enabled        = true
   }
 
   tags = {
