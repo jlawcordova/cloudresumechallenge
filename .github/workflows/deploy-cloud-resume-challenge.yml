@@ -115,10 +115,13 @@ jobs:
         run: |
           echo "web-url=$(terraform output -raw web_url)" >> "$GITHUB_OUTPUT"
         working-directory: ./infra/app
+    outputs:
+      web-url: ${{ steps.web-output.outputs.web-url }}
 
   test:
     needs: [deploy-app, deploy-web]
     runs-on: ubuntu-latest
+    environment: ${{ inputs.target-environment }}
     env:
       CYPRESS_BASE_URL: ${{needs.deploy-web.outputs.web-url}}
       CYPRESS_API_URL: ${{needs.deploy-app.outputs.app-url}}
