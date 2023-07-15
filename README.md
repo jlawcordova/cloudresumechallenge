@@ -31,3 +31,5 @@ Run commands for a workspace. For example, to run the React app:
 Run Cypress tests locally with:
 
 `npm run cypress:run --workspace=test`
+
+By default, the test runs against the production environment at [resume.jlawcordova.com](https://resume.jlawcordova.com)
