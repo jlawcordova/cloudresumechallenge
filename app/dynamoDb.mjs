@@ -24,11 +24,15 @@ export async function hasVisitorViewed(ip) {
 }
 
 export async function putVisitor(ip) {
+  var today = new Date();
+  var tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
   const params = {
     TableName: visitorTable,
     Item: {
       IP: { S: hash(ip) },
-      ViewedOn: { S: new Date().toISOString() },
+      TTL: { N: `${tomorrow.getTime() / 1000}` },
     },
   };
   await dynamoDBClient.send(new PutItemCommand(params));
