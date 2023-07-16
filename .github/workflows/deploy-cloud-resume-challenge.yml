@@ -130,6 +130,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.13.0
+      - run: echo $CYPRESS_BASE_URL
+      - run: echo $CYPRESS_API_URL
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
