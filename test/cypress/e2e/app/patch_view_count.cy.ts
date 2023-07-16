@@ -5,7 +5,7 @@ describe("PATCH /view-count", () => {
     // https://on.cypress.io/request
     cy.request({
       method: "PATCH",
-      url: `${Cypress.env('apiUrl')}/view-count`,
+      url: `${Cypress.env('API_URL')}/view-count`,
     }).should((response) => {
       expect(response.status).to.eq(200);
       var body = JSON.parse(response.body);

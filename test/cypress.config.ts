@@ -5,9 +5,9 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: "https://resume.jlawcordova.com",
+    baseUrl: "https://resume.jlawcordova.com/",
   },
   env: {
-    apiUrl: "https://api-resume.jlawcordova.com",
+    API_URL: "https://api-resume.jlawcordova.com/",
   },
 });

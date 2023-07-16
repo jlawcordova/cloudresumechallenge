@@ -113,8 +113,6 @@ resource "aws_cloudfront_distribution" "web" {
     Project     = var.project
     Environment = var.environment
   }
-
-  wait_for_deployment = false
 }
 
 resource "aws_acm_certificate" "web" {
